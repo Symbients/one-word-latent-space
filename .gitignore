@@ -1,0 +1,55 @@
+# OS files
+.DS_Store
+**/.DS_Store
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# IDE
+.idea/
+*.swp
+*.swo
+.vscode/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# ===========================================
+# Project-specific exclusions (not for public)
+# ===========================================
+
+# AI/Agent working files
+.claude/
+.beads/
+.bv/
+agents.md
+AGENTS.md
+claude.md
+CLAUDE.md
+
+# Internal docs and planning
+docs/
+design-os/
+product/
+product-plan/
+
+# GitHub templates (not relevant to project)
+.github/
+
+# Changelog (internal)
+CHANGELOG.md
+
+# Server/deployment specific
+admin/
+api/*.db
+nginx-*.conf
+*.htpasswd

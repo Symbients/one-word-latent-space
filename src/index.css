@@ -1,0 +1,894 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@variant dark (&:where(.dark, .dark *));
+
+/*
+  ONE WORD - Observatory Aesthetic
+
+  A precision instrument for observing AI latent space.
+  Like peering through a telescope at distant linguistic phenomena.
+
+  Typography: Fraunces (display) + DM Sans (body) + IBM Plex Mono (data)
+  Palette: Deep ink with antique brass accents
+*/
+
+@theme {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-heading: "Fraunces", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* ============================================
+   COLOR SYSTEM: Deep Ink + Antique Brass
+   ============================================ */
+:root {
+  /* The void - deep ink backgrounds */
+  --ink-deepest: #04060a;
+  --ink-deep: #080b11;
+  --ink-base: #0c1018;
+  --ink-surface: #121820;
+  --ink-elevated: #1a222e;
+  --ink-border: #252d3d;
+  --ink-border-subtle: #1a2030;
+
+  /* Warm white text - not pure white, slightly cream */
+  --text-primary: #f4f0e8;
+  --text-secondary: #a8a49c;
+  --text-tertiary: #6b6860;
+
+  /* Antique brass - the warm accent */
+  --brass: #c9a55c;
+  --brass-bright: #dfc078;
+  --brass-dim: #8b7340;
+  --brass-glow: rgba(201, 165, 92, 0.2);
+  --brass-glow-strong: rgba(201, 165, 92, 0.4);
+
+  /* Patina teal - complementary depth */
+  --patina: #4a7c7c;
+  --patina-dim: #2d4f4f;
+
+  /* Data visualization gradient */
+  --data-1: #c9a55c;
+  --data-2: #d4b574;
+  --data-3: #a88a4a;
+  --data-4: #8b7340;
+  --data-5: #6b5830;
+
+  /* Semantic */
+  --success: #5d9a6d;
+  --success-glow: rgba(93, 154, 109, 0.3);
+  --warning: #c9a55c;
+  --error: #b85c5c;
+  --error-glow: rgba(184, 92, 92, 0.3);
+
+  /* Shadcn compatibility */
+  --radius: 0.375rem;
+  --background: var(--ink-deep);
+  --foreground: var(--text-primary);
+  --card: var(--ink-surface);
+  --card-foreground: var(--text-primary);
+  --primary: var(--brass);
+  --primary-foreground: var(--ink-deepest);
+  --secondary: var(--ink-elevated);
+  --secondary-foreground: var(--text-secondary);
+  --muted: var(--ink-elevated);
+  --muted-foreground: var(--text-tertiary);
+  --border: var(--ink-border);
+  --input: var(--ink-border);
+  --ring: var(--brass);
+  --destructive: var(--error);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  * {
+    @apply border-[var(--ink-border)];
+  }
+
+  html {
+    background: var(--ink-deepest);
+    scroll-behavior: smooth;
+    /* Prevent layout shift from scrollbar */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--ink-deep);
+    color: var(--text-primary);
+    @apply antialiased;
+    /* Subtle texture - barely perceptible */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  /* Typography scale - restrained */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 300;
+    line-height: 1.15;
+  }
+  h2 { font-size: 1.5rem; line-height: 1.25; }
+  h3 { font-size: 1.125rem; line-height: 1.35; }
+
+  p { line-height: 1.6; }
+
+  code, pre, kbd, .font-mono {
+    font-family: var(--font-mono);
+    font-feature-settings: 'tnum' 1; /* Tabular numbers */
+  }
+
+  ::selection {
+    background: var(--brass);
+    color: var(--ink-deepest);
+  }
+
+  /* Focus visible - consistent, subtle */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ink-deep), 0 0 0 4px var(--brass-dim);
+  }
+
+  /* Scrollbar - minimal */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--ink-border);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brass-dim);
+  }
+
+  /* Smooth transitions globally */
+  *, *::before, *::after {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* ============================================
+   OBSERVATORY COMPONENTS
+   ============================================ */
+@layer components {
+  /* The main observation surface */
+  .obs-surface {
+    background: var(--ink-surface);
+    border: 1px solid var(--ink-border);
+    border-radius: 3px;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  }
+
+  /* Elevated surface with more depth */
+  .obs-surface-elevated {
+    background: linear-gradient(180deg, var(--ink-elevated) 0%, var(--ink-surface) 100%);
+    border: 1px solid var(--ink-border);
+    border-radius: 3px;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* Brass-accented elements */
+  .obs-accent {
+    color: var(--brass);
+  }
+
+  .obs-accent-glow {
+    color: var(--brass);
+    text-shadow: 0 0 20px var(--brass-glow);
+  }
+
+  /* Section dividers - like ruled lines on old instruments */
+  .obs-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--ink-border) 15%,
+      var(--brass-dim) 50%,
+      var(--ink-border) 85%,
+      transparent 100%
+    );
+  }
+
+  /* Input fields - recessed, considered */
+  .obs-input {
+    background: var(--ink-deepest);
+    border: 1px solid var(--ink-border);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    border-radius: 2px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .obs-input:hover {
+    border-color: var(--ink-elevated);
+  }
+
+  .obs-input:focus {
+    outline: none;
+    border-color: var(--brass-dim);
+    box-shadow:
+      0 0 0 1px var(--brass-dim),
+      inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .obs-input::placeholder {
+    color: var(--text-tertiary);
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  /* Select dropdown */
+  .obs-select {
+    background: var(--ink-deepest);
+    border: 1px solid var(--ink-border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    border-radius: 3px;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b6860'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+  }
+
+  .obs-select:hover {
+    border-color: var(--brass-dim);
+  }
+
+  .obs-select:focus {
+    outline: none;
+    border-color: var(--brass);
+    box-shadow: 0 0 0 2px var(--brass-glow);
+  }
+
+  /* Brass button - primary action, restrained */
+  .obs-button-primary {
+    background: var(--brass);
+    color: var(--ink-deepest);
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-size: 0.8125rem;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+  }
+
+  .obs-button-primary:hover {
+    background: var(--brass-bright);
+    box-shadow: 0 2px 8px rgba(201, 165, 92, 0.25);
+  }
+
+  .obs-button-primary:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .obs-button-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Secondary button */
+  .obs-button-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    border: 1px solid var(--ink-border);
+    border-radius: 2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .obs-button-secondary:hover {
+    border-color: var(--text-tertiary);
+    color: var(--text-primary);
+  }
+
+  .obs-button-secondary:active {
+    background: var(--ink-surface);
+  }
+
+  /* Ghost button - text only */
+  .obs-button-ghost {
+    color: var(--text-tertiary);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    transition: color 0.15s;
+  }
+
+  .obs-button-ghost:hover {
+    color: var(--text-primary);
+  }
+
+  /* Danger button */
+  .obs-button-danger {
+    color: var(--text-tertiary);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    transition: color 0.15s;
+  }
+
+  .obs-button-danger:hover {
+    color: var(--error);
+  }
+
+  /* Range slider - refined */
+  .obs-range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100%;
+    cursor: pointer;
+    height: 20px;
+  }
+
+  .obs-range::-webkit-slider-track {
+    height: 4px;
+    background: var(--ink-deepest);
+    border-radius: 2px;
+    border: 1px solid var(--ink-border);
+  }
+
+  .obs-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 8px;
+    height: 20px;
+    background: linear-gradient(
+      180deg,
+      var(--brass) 0%,
+      var(--brass) 45%,
+      var(--ink-deepest) 45%,
+      var(--ink-deepest) 55%,
+      var(--brass) 55%,
+      var(--brass) 100%
+    );
+    border-radius: 2px;
+    border: 1px solid var(--brass-dim);
+    cursor: grab;
+    margin-top: -9px;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+
+  .obs-range::-webkit-slider-thumb:hover {
+    transform: scaleY(1.05);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      0 0 8px var(--brass-glow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .obs-range::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scaleY(1.02);
+  }
+
+  .obs-range:focus {
+    outline: none;
+  }
+
+  /* Firefox slider support */
+  .obs-range::-moz-range-track {
+    height: 4px;
+    background: var(--ink-deepest);
+    border-radius: 2px;
+    border: 1px solid var(--ink-border);
+  }
+
+  .obs-range::-moz-range-thumb {
+    width: 8px;
+    height: 20px;
+    background: linear-gradient(
+      180deg,
+      var(--brass) 0%,
+      var(--brass) 45%,
+      var(--ink-deepest) 45%,
+      var(--ink-deepest) 55%,
+      var(--brass) 55%,
+      var(--brass) 100%
+    );
+    border-radius: 2px;
+    border: 1px solid var(--brass-dim);
+    cursor: grab;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Checkbox - small brass indicator */
+  .obs-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--ink-border);
+    background: var(--ink-deepest);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .obs-checkbox:hover {
+    border-color: var(--brass-dim);
+    background: var(--ink-base);
+  }
+
+  .obs-checkbox.checked {
+    background: linear-gradient(135deg, var(--brass) 0%, var(--brass-dim) 100%);
+    border-color: var(--brass-bright);
+    box-shadow: 0 0 8px var(--brass-glow);
+  }
+
+  .obs-checkbox.checked svg {
+    color: var(--ink-deepest);
+  }
+
+  /* Provider badge/icon */
+  .obs-provider-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+  }
+
+  .obs-provider-badge.brass {
+    background: linear-gradient(135deg, rgba(201, 165, 92, 0.15) 0%, rgba(139, 115, 64, 0.1) 100%);
+    border: 1px solid var(--brass-dim);
+    color: var(--brass);
+  }
+
+  .obs-provider-badge.patina {
+    background: linear-gradient(135deg, rgba(74, 124, 124, 0.15) 0%, rgba(45, 79, 79, 0.1) 100%);
+    border: 1px solid var(--patina-dim);
+    color: var(--patina);
+  }
+
+  .obs-provider-badge.success {
+    background: linear-gradient(135deg, rgba(93, 154, 109, 0.15) 0%, rgba(93, 154, 109, 0.05) 100%);
+    border: 1px solid rgba(93, 154, 109, 0.4);
+    color: var(--success);
+  }
+
+  /* Card - minimal elevation */
+  .obs-card {
+    background: var(--ink-surface);
+    border: 1px solid var(--ink-border);
+    border-radius: 3px;
+    transition: border-color 0.15s;
+  }
+
+  .obs-card:hover {
+    border-color: var(--ink-elevated);
+  }
+
+  /* Interactive row */
+  .obs-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--ink-surface);
+    border: 1px solid var(--ink-border-subtle);
+    border-radius: 3px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .obs-row:hover {
+    background: var(--ink-elevated);
+    border-color: var(--ink-border);
+  }
+
+  /* Status dot with pulse */
+  .obs-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .obs-status-dot.success {
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success-glow);
+  }
+
+  .obs-status-dot.error {
+    background: var(--error);
+    box-shadow: 0 0 8px var(--error-glow);
+  }
+
+  .obs-status-dot.warning {
+    background: var(--warning);
+    box-shadow: 0 0 8px var(--brass-glow);
+  }
+
+  .obs-status-dot.pulse::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.4;
+    animation: status-pulse 2s ease-in-out infinite;
+  }
+}
+
+/* ============================================
+   ANIMATIONS - Restrained, purposeful
+   ============================================ */
+@layer utilities {
+  /* Page entrance - subtle */
+  .animate-emerge {
+    animation: emerge 0.4s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes emerge {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Word discovery */
+  .animate-discover {
+    animation: discover 0.3s ease-out forwards;
+  }
+
+  @keyframes discover {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Gentle pulse - barely perceptible */
+  .animate-observe {
+    animation: observe 3s ease-in-out infinite;
+  }
+
+  @keyframes observe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Orbit */
+  .animate-orbit {
+    animation: orbit 8s linear infinite;
+  }
+
+  @keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Cursor blink */
+  .animate-cursor {
+    animation: cursor-blink 1.2s steps(1) infinite;
+  }
+
+  @keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Fade in */
+  .animate-fade-in-up {
+    animation: emerge 0.3s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Modal scale */
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out forwards;
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Stagger - quick, subtle */
+  .stagger-children > * {
+    opacity: 0;
+    animation: emerge 0.3s ease-out forwards;
+  }
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 40ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 80ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 120ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 160ms; }
+  .stagger-children > *:nth-child(6) { animation-delay: 200ms; }
+}
+
+/* ============================================
+   SPECIAL EFFECTS
+   ============================================ */
+
+/* Radial gradient backdrop for focus moments */
+.obs-spotlight {
+  background: radial-gradient(
+    ellipse at center,
+    var(--brass-glow) 0%,
+    transparent 70%
+  );
+}
+
+/* Fine grain overlay */
+.obs-grain {
+  position: relative;
+}
+
+.obs-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Etched text effect for labels */
+.obs-etched {
+  color: var(--text-tertiary);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.03);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+/* Word cloud word styling */
+.word-discovered {
+  display: inline-block;
+  font-family: var(--font-display);
+  color: var(--brass);
+  text-shadow: 0 0 30px var(--brass-glow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.word-discovered:hover {
+  color: var(--brass-bright);
+  text-shadow: 0 0 40px var(--brass-glow-strong);
+  transform: scale(1.08) translateY(-2px);
+}
+
+/* Progress ring */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  fill: transparent;
+  stroke: var(--ink-border);
+  stroke-width: 3;
+}
+
+.progress-ring-progress {
+  fill: transparent;
+  stroke: var(--brass);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modal backdrop */
+.obs-backdrop {
+  background: rgba(4, 6, 10, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+/* Modal panel */
+.obs-modal {
+  background: linear-gradient(180deg, var(--ink-elevated) 0%, var(--ink-surface) 100%);
+  border: 1px solid var(--ink-border);
+  border-radius: 8px;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Header with glass effect */
+.obs-header-glass {
+  background: rgba(8, 11, 17, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ink-border-subtle);
+}
+
+.obs-header-glass.scrolled {
+  background: rgba(8, 11, 17, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Decorative corner flourishes */
+.obs-corners {
+  position: relative;
+}
+
+.obs-corners::before,
+.obs-corners::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--brass-dim);
+  border-style: solid;
+  opacity: 0.5;
+}
+
+.obs-corners::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.obs-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+/* ============================================
+   UNEXPECTED CRAFT - Subtle rewards
+   ============================================ */
+
+/* Brass shimmer on interactive elements */
+@keyframes brass-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.obs-button-primary:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: brass-shimmer 0.6s ease-out;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.obs-button-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle letter-spacing animation on focus */
+.obs-input:focus::placeholder {
+  letter-spacing: 0.05em;
+  transition: letter-spacing 0.3s ease-out;
+}
+
+/* Status dot subtle breathing */
+@keyframes status-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Tooltip/kbd subtle depth */
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  padding: 2px 6px;
+  background: var(--ink-deepest);
+  border: 1px solid var(--ink-border);
+  border-radius: 3px;
+  box-shadow:
+    0 1px 0 var(--ink-elevated),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Tabular figures for all numbers in data contexts */
+.tabular-nums {
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Smooth color transitions on hovers */
+a, button {
+  transition: color 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+/* Selection in inputs - brass tinted */
+input::selection,
+textarea::selection {
+  background: rgba(201, 165, 92, 0.3);
+}
+
+/* Subtle glow on focused modals */
+.obs-modal:focus-within {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 0 60px -20px var(--brass-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Fine print styling */
+.obs-fine-print {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* Section header accent line */
+.obs-section-header {
+  position: relative;
+  display: inline-block;
+}
+
+.obs-section-header::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 24px;
+  height: 1px;
+  background: var(--brass-dim);
+}
